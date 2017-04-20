@@ -1,0 +1,136 @@
+<div class="apidocDiv">
+<style>
+/*csslint
+*/
+.apidocDiv {
+    background: #fff;
+    font-family: Arial, Helvetica, sans-serif;
+}
+.apidocDiv a[href] {
+    color: #33f;
+    font-weight: bold;
+    text-decoration: none;
+}
+.apidocDiv a[href]:hover {
+    text-decoration: underline;
+}
+.apidocCodeCommentSpan {
+    background: #bbf;
+    color: #000;
+    display: block;
+}
+.apidocCodeKeywordSpan {
+    color: #d00;
+    font-weight: bold;
+}
+.apidocCodePre {
+    background: #eef;
+    border: 1px solid;
+    color: #777;
+    padding: 5px;
+    white-space: pre-wrap;
+}
+.apidocFooterDiv {
+    margin-top: 20px;
+    text-align: center;
+}
+.apidocModuleLi {
+    margin-top: 10px;
+}
+.apidocSectionDiv {
+    border-top: 1px solid;
+    margin-top: 20px;
+}
+.apidocSignatureSpan {
+    color: #777;
+    font-weight: bold;
+}
+</style>
+<h1>api documentation for
+    <a
+
+    >gulp-chmod (v2.0.0)</a>
+</h1>
+<h4>Change permissions of Vinyl files</h4>
+<div class="apidocSectionDiv"><a
+    href="#apidoc.tableOfContents"
+    id="apidoc.tableOfContents"
+><h1>table of contents</h1></a><ol>
+
+    <li class="apidocModuleLi"><a href="#apidoc.module.gulp-chmod">module gulp-chmod</a><ol>
+
+        <li>
+
+            <a class="apidocElementLiA" href="#apidoc.element.gulp-chmod.gulp-chmod">
+            function <span class="apidocSignatureSpan"></span>gulp-chmod
+            <span class="apidocSignatureSpan">(mode, dirMode)</span>
+            </a>
+
+        </li>
+
+    </ol></li>
+
+</ol></div>
+
+<div class="apidocSectionDiv">
+<h1><a href="#apidoc.module.gulp-chmod" id="apidoc.module.gulp-chmod">module gulp-chmod</a></h1>
+
+
+    <h2>
+        <a href="#apidoc.element.gulp-chmod.gulp-chmod" id="apidoc.element.gulp-chmod.gulp-chmod">
+        function <span class="apidocSignatureSpan"></span>gulp-chmod
+        <span class="apidocSignatureSpan">(mode, dirMode)</span>
+        </a>
+    </h2>
+    <ul>
+    <li>description and source-code<pre class="apidocCodePre">(mode, dirMode) =&#x3e; {
+	if (mode !== null &#x26;&#x26; mode !== undefined &#x26;&#x26; typeof mode !== &#x27;number&#x27; &#x26;&#x26; typeof mode !== &#x27;object&#x27;) {
+		throw new TypeError(&#x27;Expected mode to be null/undefined/number/Object&#x27;);
+	}
+
+	if (dirMode === true) {
+		dirMode = mode;
+	}
+
+	if (dirMode !== null &#x26;&#x26; dirMode !== undefined &#x26;&#x26; typeof dirMode !== &#x27;number&#x27; &#x26;&#x26; typeof dirMode !== &#x27;object&#x27;) {
+		throw new TypeError(&#x27;Expected dirMode to be null/undefined/true/number/Object&#x27;);
+	}
+
+	return through.obj((file, enc, cb) =&#x3e; {
+		let curMode = mode;
+
+		if (file.isNull() &#x26;&#x26; file.stat &#x26;&#x26; file.stat.isDirectory()) {
+			curMode = dirMode;
+		}
+
+		if (curMode === undefined || curMode === null) {
+			cb(null, file);
+			return;
+		}
+
+		file.stat = file.stat || {};
+		file.stat.mode = file.stat.mode || defaultMode;
+
+		if (typeof curMode === &#x27;object&#x27;) {
+			const statMode = new Mode(file.stat);
+			deepAssign(statMode, normalize(curMode));
+			file.stat.mode = statMode.stat.mode;
+		} else {
+			file.stat.mode = curMode;
+		}
+
+		cb(null, file);
+	});
+}</pre></li>
+    <li>example usage<pre class="apidocCodePre">n/a</pre></li>
+    </ul>
+
+
+</div>
+
+<div class="apidocFooterDiv">
+    [ this document was created with
+    <a href="https://github.com/kaizhu256/node-utility2" target="_blank">utility2</a>
+    ]
+</div>
+</div>
